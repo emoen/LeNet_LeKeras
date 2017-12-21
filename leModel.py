@@ -12,6 +12,7 @@ from IPython.display import SVG
 from keras.utils.vis_utils import model_to_dot
 from keras.utils import plot_model
 from kt_utils import * #??
+import matplotlib.pyplot as plot
 
 import keras.backend as K
 K.set_image_data_format('channels_last')
@@ -102,7 +103,11 @@ def HappyModel(input_shape):
  
 happyModel = HappyModel((64, 64, 3))
 happyModel.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
-happyModel.fit(x = X_train, y = Y_train, epochs = 1, batch_size = 12)
+history = happyModel.fit(x = X_train, y = Y_train, epochs = 1, batch_size = 12)
+
+plot.plot(history.history['acc'], label='acc')
+plot.plot(history.history['loss'], label='loss')
+
 preds = happyModel.evaluate(x = X_test, y = Y_test)
 
 print()
